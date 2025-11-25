@@ -156,34 +156,36 @@ export default function Home() {
           <p className="text-slate-400 text-lg">Conheça como o agente funciona em ação</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { title: "Diagnóstico de Pragas", placeholder: "Vídeo 1" },
-            { title: "Cálculo de Adubação", placeholder: "Vídeo 2" },
-            { title: "Consultoria ao Vivo", placeholder: "Vídeo 3" }
-          ].map((video, i) => (
-            <div
-              key={i}
-              className="group rounded-2xl overflow-hidden bg-gradient-to-br from-green-900/20 to-slate-900/40 border border-green-500/20 hover:border-green-400/50 backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
-            >
-              <div className="relative w-full h-56 bg-slate-800/50 flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-slate-900/40 group-hover:from-green-600/20 transition-all duration-300"></div>
-                <button className="relative z-10 flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-green-400 to-green-600 hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
-                  </svg>
-                </button>
-                <span className="absolute inset-0 flex items-center justify-center text-slate-500 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                  {video.placeholder}
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-white">{video.title}</h3>
-                <p className="text-slate-400 text-sm mt-2">Veja como o agente resolve problemas reais em tempo real</p>
-              </div>
-            </div>
-          ))}
-        </div>
+       <div className="grid md:grid-cols-3 gap-8">
+  {[
+    { title: "Relatório de Monitoramento", videoId: "Rwfai-yAzUI", desc: "Monitore suas atividades do campo de forma simples pelo WhatsApp: envie o áudio e nosso agente transcreve, organizando tudo em um PDF pronto e estruturado. " },
+    { title: "Cálculo de população de sementes", videoId: "OEkkB3fIn5k", desc: "Cálculo fácil da densidade de soja e do comprimento em metros lineares" },
+    { title: "Cálculo de dosagem", videoId: "CE169ueDVZg", desc: "Calcule de forma rápida e precisa a dosagem de aplicação. Tenha resultados confiáveis sem complicações" }
+  ].map((video, i) => (
+    <div
+      key={i}
+      className="group rounded-2xl overflow-hidden bg-gradient-to-br from-green-900/20 to-slate-900/40 border border-green-500/20 hover:border-green-400/50 backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
+    >
+      <div className="relative w-full h-56 bg-slate-800/50 overflow-hidden">
+        <iframe
+          width="100%"
+          height="100%"
+          src={`https://www.youtube.com/embed/${video.videoId}`}
+          title={video.title}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="rounded-2xl"
+        ></iframe>
+      </div>
+      <div className="p-6">
+        <h3 className="text-lg font-bold text-white">{video.title}</h3>
+        <p className="text-slate-400 text-sm mt-2">{video.desc}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
       </section>
 
       {/* PREÇO */}

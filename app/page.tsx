@@ -6,11 +6,11 @@ export default function Home() {
   const [hoveredPlan, setHoveredPlan] = useState(null);
 
   const features = [
-    { icon: AlertCircle, title: "Diagnóstico de Pragas", desc: "Identifique pragas e doenças com precisão técnica" },
-    { icon: Zap, title: "Recomendações de Adubação", desc: "Otimize a fertilização com base em sua cultura" },
-    { icon: TrendingUp, title: "Cálculo de Misturas", desc: "Doses precisas e seguras para suas plantações" },
-    { icon: Leaf, title: "Planejamento de Safra", desc: "Estratégias completas do plantio à colheita" },
-    { icon: MessageCircle, title: "Alertas Climáticos", desc: "Notificações em tempo real via WhatsApp" },
+    { icon: AlertCircle, title: "Dúvidas pontuais do campo", desc: "Retire suas dúvidas com precisão técnica." },
+    { icon: Zap, title: "Recomendações de Adubação", desc: "Otimize a fertilização com base em sua cultura." },
+    { icon: TrendingUp, title: "Produtos e Doses", desc: "Doses precisas e seguras para suas plantações." },
+    { icon: Leaf, title: "Relatório de monitoramento", desc: "Monte relatório através de texto ou aúdio sem sair da fazenda informando (fazenda, talhões, recomendaçoes, observações,etc)." },
+    { icon: MessageCircle, title: "Cálculos qualquer de campo", desc: "Realizar qualquer cálculo, seja de adubação, sementes, dentro do whatsapp." },
     { icon: Zap, title: "Consultoria 24h", desc: "Especialista agronômico disponível sempre" }
   ];
 
@@ -59,7 +59,7 @@ export default function Home() {
           </h1>
 
           <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Inteligência artificial especializada em agronomia, disponível 24/7. Receba orientações técnicas, diagnósticos de pragas, cálculos de adubação e muito mais em segundos, sem sair do WhatsApp.
+            Inteligência artificial especializada em agronomia, disponível 24/7. Receba orientações técnicas, relatório de monitoramento, cálculos de adubação e muito mais em segundos, sem sair do WhatsApp.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
@@ -158,9 +158,9 @@ export default function Home() {
 
        <div className="grid md:grid-cols-3 gap-8">
   {[
-    { title: "Relatório de Monitoramento", videoId: "Rwfai-yAzUI", desc: "Monitore suas atividades do campo de forma simples pelo WhatsApp: envie o áudio e nosso agente transcreve, organizando tudo em um PDF pronto e estruturado. " },
+    { title: "Relatório de Monitoramento",       videoId: "Rwfai-yAzUI", desc: "Monitore suas atividades do campo de forma simples pelo WhatsApp: envie o áudio e nosso agente transcreve, organizando tudo em um PDF pronto e estruturado. " },
     { title: "Cálculo de população de sementes", videoId: "OEkkB3fIn5k", desc: "Cálculo fácil da densidade de soja e do comprimento em metros lineares" },
-    { title: "Cálculo de dosagem", videoId: "CE169ueDVZg", desc: "Calcule de forma rápida e precisa a dosagem de aplicação. Tenha resultados confiáveis sem complicações" }
+    { title: "Cálculo de dosagem",               videoId: "CE169ueDVZg", desc: "Calcule de forma rápida e precisa a dosagem de aplicação. Tenha resultados confiáveis sem complicações" }
   ].map((video, i) => (
     <div
       key={i}
@@ -270,7 +270,7 @@ export default function Home() {
       {/* CTA Final */}
       <section className="max-w-7xl mx-auto px-6 py-24 text-center">
         <div className="bg-gradient-to-r from-green-600/20 to-green-900/20 border border-green-500/30 rounded-3xl p-12 backdrop-blur-xl">
-          <h2 className="text-4xl font-bold mb-4">Pronto para Revolucionar Seu Agronegócio?</h2>
+          <h2 className="text-4xl font-bold mb-4">Pronto para Revolucionar Seu Resultados no Campo ?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
             Milhares de produtores já confiam em orientações técnicas de IA. Não fique para trás.
           </p>

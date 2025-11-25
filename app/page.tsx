@@ -1,16 +1,17 @@
 "use client";
+"use client";
 import React, { useState } from 'react';
 import { CheckCircle, Zap, MessageCircle, Leaf, TrendingUp, AlertCircle } from 'lucide-react';
 
 export default function Home() {
-  const [hoveredPlan, setHoveredPlan] = useState(null);
+  const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
 
   const features = [
-    { icon: AlertCircle, title: "Dúvidas pontuais do campo", desc: "Retire suas dúvidas com precisão técnica." },
+    { icon: AlertCircle, title: "Dúvidas pontuais do campo", desc: "Esclareça suas dúvidas com base técnica, apoiada nas melhores fontes científicas." },
     { icon: Zap, title: "Recomendações de Adubação", desc: "Otimize a fertilização com base em sua cultura." },
     { icon: TrendingUp, title: "Produtos e Doses", desc: "Doses precisas e seguras para suas plantações." },
     { icon: Leaf, title: "Relatório de monitoramento", desc: "Monte relatório através de texto ou aúdio sem sair da fazenda informando (fazenda, talhões, recomendaçoes, observações,etc)." },
-    { icon: MessageCircle, title: "Cálculos qualquer de campo", desc: "Realizar qualquer cálculo, seja de adubação, sementes, dentro do whatsapp." },
+    { icon: MessageCircle, title: "Cálculos gerais do campo", desc: "Realizar qualquer cálculo, seja de adubação, sementes, dentro do whatsapp." },
     { icon: Zap, title: "Consultoria 24h", desc: "Especialista agronômico disponível sempre" }
   ];
 
@@ -156,36 +157,35 @@ export default function Home() {
           <p className="text-slate-400 text-lg">Conheça como o agente funciona em ação</p>
         </div>
 
-       <div className="grid md:grid-cols-3 gap-8">
-  {[
-    { title: "Relatório de Monitoramento",       videoId: "Rwfai-yAzUI", desc: "Monitore suas atividades do campo de forma simples pelo WhatsApp: envie o áudio e nosso agente transcreve, organizando tudo em um PDF pronto e estruturado. " },
-    { title: "Cálculo de população de sementes", videoId: "OEkkB3fIn5k", desc: "Cálculo fácil da densidade de soja e do comprimento em metros lineares" },
-    { title: "Cálculo de dosagem",               videoId: "CE169ueDVZg", desc: "Calcule de forma rápida e precisa a dosagem de aplicação. Tenha resultados confiáveis sem complicações" }
-  ].map((video, i) => (
-    <div
-      key={i}
-      className="group rounded-2xl overflow-hidden bg-gradient-to-br from-green-900/20 to-slate-900/40 border border-green-500/20 hover:border-green-400/50 backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
-    >
-      <div className="relative w-full h-56 bg-slate-800/50 overflow-hidden">
-        <iframe
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${video.videoId}`}
-          title={video.title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="rounded-2xl"
-        ></iframe>
-      </div>
-      <div className="p-6">
-        <h3 className="text-lg font-bold text-white">{video.title}</h3>
-        <p className="text-slate-400 text-sm mt-2">{video.desc}</p>
-      </div>
-    </div>
-  ))}
-</div>
-
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { title: "Relatório de Monitoramento", videoId: "Rwfai-yAzUI", desc: "Monitore suas atividades do campo de forma simples pelo WhatsApp: envie o áudio e nosso agente transcreve, organizando tudo em um PDF pronto e estruturado." },
+            { title: "Cálculo de população de sementes", videoId: "OEkkB3fIn5k", desc: "Cálculo fácil da densidade de soja e do comprimento em metros lineares" },
+            { title: "Cálculo de dosagem", videoId: "CE169ueDVZg", desc: "Calcule de forma rápida e precisa a dosagem de aplicação. Tenha resultados confiáveis sem complicações" }
+          ].map((video, i) => (
+            <div
+              key={i}
+              className="group rounded-2xl overflow-hidden bg-gradient-to-br from-green-900/20 to-slate-900/40 border border-green-500/20 hover:border-green-400/50 backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
+            >
+              <div className="relative w-full h-56 bg-slate-800/50 overflow-hidden">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${video.videoId}`}
+                  title={video.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="rounded-2xl"
+                ></iframe>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-white">{video.title}</h3>
+                <p className="text-slate-400 text-sm mt-2">{video.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* PREÇO */}
@@ -270,7 +270,7 @@ export default function Home() {
       {/* CTA Final */}
       <section className="max-w-7xl mx-auto px-6 py-24 text-center">
         <div className="bg-gradient-to-r from-green-600/20 to-green-900/20 border border-green-500/30 rounded-3xl p-12 backdrop-blur-xl">
-          <h2 className="text-4xl font-bold mb-4">Pronto para Revolucionar Seu Resultados no Campo ?</h2>
+          <h2 className="text-4xl font-bold mb-4">Pronto para Revolucionar Seus Resultados no Campo?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
             Milhares de produtores já confiam em orientações técnicas de IA. Não fique para trás.
           </p>

@@ -1,38 +1,62 @@
 "use client";
-"use client";
-import React, { useState } from 'react';
-import { CheckCircle, Zap, MessageCircle, Leaf, TrendingUp, AlertCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { CheckCircle, Zap, MessageCircle, Leaf, TrendingUp, AlertCircle } from "lucide-react";
 
 export default function Home() {
   const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
+  const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
 
   const features = [
     { icon: AlertCircle, title: "Dúvidas pontuais do campo", desc: "Esclareça suas dúvidas com base técnica, apoiada nas melhores fontes científicas." },
     { icon: Zap, title: "Recomendações de Adubação", desc: "Otimize a fertilização com base em sua cultura." },
     { icon: TrendingUp, title: "Produtos e Doses", desc: "Doses precisas e seguras para suas plantações." },
-    { icon: Leaf, title: "Relatório de monitoramento", desc: "Monte relatório através de texto ou aúdio sem sair da fazenda informando (fazenda, talhões, recomendaçoes, observações,etc)." },
+    { icon: Leaf, title: "Relatório de monitoramento", desc: "Monte relatório através de texto ou áudio sem sair da fazenda informando (fazenda, talhões, recomendaçoes, observações,etc)." },
     { icon: MessageCircle, title: "Cálculos gerais do campo", desc: "Realizar qualquer cálculo, seja de adubação, sementes, dentro do whatsapp." },
     { icon: Zap, title: "Consultoria 24h", desc: "Especialista agronômico disponível sempre" }
   ];
 
   const plans = [
-    {
-      name: "Plano Recorrente",
-      price: "R$ 79,99",
-      description: "Acesso contínuo com suporte prioritário",
-      link: "https://buy.stripe.com/7sY6oH8RV3ZU3rgdB653O01",
-      highlighted: true,
-      cta: "Assinar Agora"
-    },
-    {
-      name: "Plano Único",
-      price: "R$ 109,90",
-      description: "Ativação pontual do seu agente",
-      link: "https://buy.stripe.com/28E8wP2txfICd1Q1So53O02",
-      highlighted: false,
-      cta: "Comprar Agora"
+  {
+    name: "Plano Recorrente",
+    price: "R$ 79,99",
+    description: "Acesso contínuo com suporte prioritário",
+    priceId: "price_1SX4n4ERrGAbzA6Mw3cebbuS", // <- COLOQUE O ID DO STRIPE
+    highlighted: true,
+    cta: "Assinar Agora",
+    recorrente: true,
+
+  },
+  {
+    name: "Plano 30 dias",
+    price: "R$ 109,90",
+    description: "Ativação pontual do seu agente",
+    priceId: "price_1SXR9kERrGAbzA6MX8GbeXfW", // <- COLOQUE O OUTRO ID
+    highlighted: false,
+    cta: "Comprar Agora",
+    recorrente: false,
+
+  }
+];
+
+
+  // Redirecionamento simples e confiável para o link do Stripe (mesma aba)
+  const handleCheckout = async (url: string, index: number) => {
+    try {
+      setLoadingIndex(index);
+      // se você quiser chamar sua API primeiro para registrar algo,
+      // descomente e adapte o fetch abaixo; por enquanto usamos redirect direto:
+      //
+      // await fetch("/api/checkout", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ url }) });
+
+      // redireciona para o Stripe na mesma aba (funciona sempre)
+      window.location.href = url;
+      // ou window.location.assign(url);
+    } catch (err) {
+      console.error("Erro ao iniciar checkout:", err);
+      alert("Ocorreu um erro ao tentar iniciar o pagamento. Tente novamente.");
+      setLoadingIndex(null);
     }
-  ];
+  };
 
   return (
     <main className="bg-gradient-to-br from-slate-950 via-green-950 to-slate-900 min-h-screen text-white overflow-hidden">
@@ -121,28 +145,27 @@ export default function Home() {
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { step: "1", title: "Escolha seu Plano", desc: "Selecione entre pagamento único ou assinatura mensal" },
-            { step: "2", title: "Complete a Compra", desc: "Finalize o pagamento de forma segura via Stripe" },
-            { step: "3", title: "Ative no WhatsApp", desc: "Receba o link e comece a usar seu agente imediatamente" }
-          ].map((item, i) => (
-            <div key={i} className="relative">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 font-bold text-lg">
-                    {item.step}
+          {[{ step: "1", title: "Escolha seu Plano", desc: "Selecione entre plano 30 dias ou assinatura mensal" },
+          { step: "2", title: "Complete a Compra", desc: "Finalize o pagamento de forma segura via Stripe" },
+          { step: "3", title: "Ative no WhatsApp", desc: "Receba o link e comece a usar seu agente imediatamente" }]
+            .map((item, i) => (
+              <div key={i} className="relative">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 font-bold text-lg">
+                      {item.step}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                    <p className="text-slate-400">{item.desc}</p>
                   </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-slate-400">{item.desc}</p>
-                </div>
+                {i < 2 && (
+                  <div className="hidden md:block absolute -right-4 top-6 text-green-500/40 text-2xl">→</div>
+                )}
               </div>
-              {i < 2 && (
-                <div className="hidden md:block absolute -right-4 top-6 text-green-500/40 text-2xl">→</div>
-              )}
-            </div>
-          ))}
+            ))}
         </div>
       </section>
 
@@ -158,35 +181,31 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { title: "Relatório de Monitoramento", videoId: "Rwfai-yAzUI", desc: "Monitore suas atividades do campo de forma simples pelo WhatsApp: envie o áudio e nosso agente transcreve, organizando tudo em um PDF pronto e estruturado." },
-            { title: "Cálculo de população de sementes", videoId: "OEkkB3fIn5k", desc: "Cálculo fácil da densidade de soja e do comprimento em metros lineares" },
-            { title: "Cálculo de dosagem", videoId: "CE169ueDVZg", desc: "Calcule de forma rápida e precisa a dosagem de aplicação. Tenha resultados confiáveis sem complicações" }
-          ].map((video, i) => (
-            <div
-              key={i}
-              className="group rounded-2xl overflow-hidden bg-gradient-to-br from-green-900/20 to-slate-900/40 border border-green-500/20 hover:border-green-400/50 backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
-            >
-              <div className="relative w-full h-56 bg-slate-800/50 overflow-hidden">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${video.videoId}`}
-                  title={video.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="rounded-2xl"
-                ></iframe>
+          {[{ title: "Relatório de Monitoramento", videoId: "Rwfai-yAzUI", desc: "Monitore suas atividades do campo de forma simples pelo WhatsApp: envie o áudio e nosso agente transcreve, organizando tudo em um PDF pronto e estruturado." },
+          { title: "Cálculo de população de sementes", videoId: "OEkkB3fIn5k", desc: "Cálculo fácil da densidade de soja e do comprimento em metros lineares" },
+          { title: "Cálculo de dosagem", videoId: "CE169ueDVZg", desc: "Calcule de forma rápida e precisa a dosagem de aplicação. Tenha resultados confiáveis sem complicações" }]
+            .map((video, i) => (
+              <div key={i} className="group rounded-2xl overflow-hidden bg-gradient-to-br from-green-900/20 to-slate-900/40 border border-green-500/20 hover:border-green-400/50 backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
+                <div className="relative w-full h-56 bg-slate-800/50 overflow-hidden">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={`https://www.youtube.com/embed/${video.videoId}`}
+                    title={video.title}
+                    frameBorder="0"
+                    allowFullScreen
+                    className="rounded-2xl"
+                  ></iframe>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-white">{video.title}</h3>
+                  <p className="text-slate-400 text-sm mt-2">{video.desc}</p>
+                </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-white">{video.title}</h3>
-                <p className="text-slate-400 text-sm mt-2">{video.desc}</p>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
+
 
       {/* PREÇO */}
       <section id="preco" className="max-w-7xl mx-auto px-6 py-24">
@@ -250,21 +269,50 @@ export default function Home() {
                 )}
               </ul>
 
-              <a
-                href={plan.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-full py-6 rounded-2xl font-bold text-xl transition-all duration-300 text-center block ${
-                  plan.highlighted
-                    ? "bg-gradient-to-r from-green-400 to-green-600 text-white shadow-lg hover:shadow-2xl hover:scale-105"
-                    : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
-                }`}
-              >
-                {plan.cta}
-              </a>
+                    <button
+            onClick={async () => {
+              try {
+                setLoadingIndex(i);
+
+                console.log("PLAN:", plan);
+                
+                
+                console.log("PRICEID:", plan.priceId);
+
+
+                const res = await fetch("/api/checkout", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ priceId: plan.priceId , recurring: plan.recorrente}), // <- usando priceId do plano
+                });
+
+                const data = await res.json();
+
+                if (data.url) {
+                  window.location.href = data.url;
+                } else {
+                  alert("Erro ao criar sessão de pagamento.");
+                }
+              } catch (err) {
+                console.error(err);
+                alert("Erro ao iniciar pagamento.");
+              } finally {
+                setLoadingIndex(null);
+              }
+            }}
+            disabled={loadingIndex === i}
+            className={`w-full py-6 rounded-2xl font-bold text-xl transition-all duration-300 text-center block ${
+              plan.highlighted
+                ? "bg-gradient-to-r from-green-400 to-green-600 text-white shadow-lg hover:shadow-2xl hover:scale-105"
+                : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
+            } ${loadingIndex === i ? "opacity-70 cursor-wait" : ""}`}
+          >
+            {loadingIndex === i ? "Aguarde..." : plan.cta}
+          </button>
+
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
       </section>
 
       {/* CTA Final */}

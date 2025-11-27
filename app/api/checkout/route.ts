@@ -17,13 +17,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // TIPOS CORRETOS do Stripe
-    // PIX só funciona para pagamentos únicos
-    const paymentMethods: Stripe.Checkout.SessionCreateParams.PaymentMethodType[] = recurring
-      ? ["card"]
-      : ["card", "pix"];
+    // Apenas cartão em todos os casos
+    const paymentMethods: Stripe.Checkout.SessionCreateParams.PaymentMethodType[] = ["card"];
 
-    // Cria a sessão de checkout
+    // Cria a sessão
     const session = await stripe.checkout.sessions.create({
       mode: recurring ? "subscription" : "payment",
       payment_method_types: paymentMethods,
@@ -38,6 +35,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ url: session.url });
+
   } catch (error: any) {
     console.error("Stripe error:", error);
 

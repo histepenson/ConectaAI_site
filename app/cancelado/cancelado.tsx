@@ -5,4 +5,5 @@ export default function Cancelado() {
       <p>Se quiser tentar novamente, basta retornar à página anterior.</p>
     </div>
   );
+  
 }

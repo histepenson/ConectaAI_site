@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 
+// Inicializa Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-11-17.clover",
 });
@@ -16,21 +17,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // TIPOS CORRETOS do Stripe
+    // PIX só funciona para pagamentos únicos
+    const paymentMethods: Stripe.Checkout.SessionCreateParams.PaymentMethodType[] = recurring
+      ? ["card"]
+      : ["card", "pix"];
+
+    // Cria a sessão de checkout
     const session = await stripe.checkout.sessions.create({
-      mode: recurring ? "subscription" : "payment", // ← AQUI ESTÁ O SEGREDO
+      mode: recurring ? "subscription" : "payment",
+      payment_method_types: paymentMethods,
       line_items: [
         {
           price: priceId,
           quantity: 1,
         },
       ],
-      success_url: "https://conectaaii.com.br/sucesso",
+      success_url: "https://conectaaii.com.br/sucesso?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://conectaaii.com.br/cancelado",
     });
 
     return NextResponse.json({ url: session.url });
   } catch (error: any) {
     console.error("Stripe error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+
+    let message = "Erro interno no servidor";
+    if (error?.raw?.message) message = error.raw.message;
+
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

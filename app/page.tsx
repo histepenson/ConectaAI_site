@@ -18,9 +18,9 @@ export default function Home() {
   const plans = [
   {
     name: "Plano Recorrente",
-    price: "R$ 79,99",
+    price: "R$ 159,99",
     description: "Acesso contínuo com suporte prioritário",
-    priceId: "price_1SX4n4ERrGAbzA6Mw3cebbuS", // <- COLOQUE O ID DO STRIPE
+    priceId: "price_1SYSyGERrGAbzA6MctLf7Pjm", // <- COLOQUE O ID DO STRIPE
     highlighted: true,
     cta: "Assinar Agora",
     recorrente: true,
@@ -28,9 +28,9 @@ export default function Home() {
   },
   {
     name: "Plano 30 dias",
-    price: "R$ 109,90",
+    price: "R$ 159,99",
     description: "Ativação pontual do seu agente",
-    priceId: "price_1SXR9kERrGAbzA6MX8GbeXfW", // <- COLOQUE O OUTRO ID
+    priceId: "price_1SYSxdERrGAbzA6MO5vIwMDJ", // <- COLOQUE O OUTRO ID
     highlighted: false,
     cta: "Comprar Agora",
     recorrente: false,

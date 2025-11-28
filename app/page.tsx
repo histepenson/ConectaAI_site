@@ -28,7 +28,7 @@ export default function Home() {
   },
   {
     name: "Plano 30 dias",
-    price: "R$ 159,99",
+    price: "R$ 179,99",
     description: "Ativação pontual do seu agente",
     priceId: "price_1SYSxdERrGAbzA6MO5vIwMDJ", // <- COLOQUE O OUTRO ID
     highlighted: false,

@@ -1,3 +1,4 @@
+// app/page.tsx
 "use client";
 import React, { useState } from "react";
 import { CheckCircle, Zap, MessageCircle, Leaf, TrendingUp, AlertCircle } from "lucide-react";
@@ -16,44 +17,86 @@ export default function Home() {
   ];
 
   const plans = [
-  {
-    name: "Plano Recorrente",
-    price: "R$ 159,99",
-    description: "Acesso contínuo com suporte prioritário",
-    priceId: "price_1SYSyGERrGAbzA6MctLf7Pjm", // <- COLOQUE O ID DO STRIPE
-    highlighted: true,
-    cta: "Assinar Agora",
-    recorrente: true,
+    {
+      name: "Plano Recorrente",
+      price: "R$ 159,99",
+      description: "Acesso contínuo com suporte prioritário",
+      priceId: "price_1SYSyGERrGAbzA6MctLf7Pjm",
+      highlighted: true,
+      cta: "Assinar Agora",
+      recorrente: true,
+      value: 159.99,
+    },
+    {
+      name: "Plano 30 dias",
+      price: "R$ 179,99",
+      description: "Ativação pontual do seu agente",
+      priceId: "price_1SYSxdERrGAbzA6MO5vIwMDJ",
+      highlighted: false,
+      cta: "Comprar Agora",
+      recorrente: false,
+      value: 179.99,
+    }
+  ];
 
-  },
-  {
-    name: "Plano 30 dias",
-    price: "R$ 179,99",
-    description: "Ativação pontual do seu agente",
-    priceId: "price_1SYSxdERrGAbzA6MO5vIwMDJ", // <- COLOQUE O OUTRO ID
-    highlighted: false,
-    cta: "Comprar Agora",
-    recorrente: false,
+  // Função para rastrear conversão no Google Ads
+  const trackCheckoutEvent = (planName: string, value: number) => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'begin_checkout', {
+        'value': value,
+        'currency': 'BRL',
+        'items': [{
+          'item_name': planName,
+          'price': value
+        }]
+      });
+    }
+  };
 
-  }
-];
-
-
-  // Redirecionamento simples e confiável para o link do Stripe (mesma aba)
-  const handleCheckout = async (url: string, index: number) => {
+  const handleCheckout = async (planIndex: number) => {
     try {
-      setLoadingIndex(index);
-      // se você quiser chamar sua API primeiro para registrar algo,
-      // descomente e adapte o fetch abaixo; por enquanto usamos redirect direto:
-      //
-      // await fetch("/api/checkout", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ url }) });
+      setLoadingIndex(planIndex);
+      const plan = plans[planIndex];
 
-      // redireciona para o Stripe na mesma aba (funciona sempre)
-      window.location.href = url;
-      // ou window.location.assign(url);
+      // Rastrear evento de checkout no Google Ads
+      trackCheckoutEvent(plan.name, plan.value);
+
+      console.log("PLAN:", plan);
+      console.log("PRICEID:", plan.priceId);
+
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          priceId: plan.priceId, 
+          recurring: plan.recorrente 
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.url) {
+        // Rastrear conversão completa quando o usuário é redirecionado
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'purchase', {
+            'value': plan.value,
+            'currency': 'BRL',
+            'transaction_id': 'CHK' + Date.now(),
+            'items': [{
+              'item_name': plan.name,
+              'price': plan.value
+            }]
+          });
+        }
+
+        window.location.href = data.url;
+      } else {
+        alert("Erro ao criar sessão de pagamento.");
+      }
     } catch (err) {
-      console.error("Erro ao iniciar checkout:", err);
-      alert("Ocorreu um erro ao tentar iniciar o pagamento. Tente novamente.");
+      console.error(err);
+      alert("Erro ao iniciar pagamento.");
+    } finally {
       setLoadingIndex(null);
     }
   };
@@ -206,7 +249,6 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* PREÇO */}
       <section id="preco" className="max-w-7xl mx-auto px-6 py-24">
         <div className="text-center mb-16">
@@ -269,50 +311,20 @@ export default function Home() {
                 )}
               </ul>
 
-                    <button
-            onClick={async () => {
-              try {
-                setLoadingIndex(i);
-
-                console.log("PLAN:", plan);
-                
-                
-                console.log("PRICEID:", plan.priceId);
-
-
-                const res = await fetch("/api/checkout", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ priceId: plan.priceId , recurring: plan.recorrente}), // <- usando priceId do plano
-                });
-
-                const data = await res.json();
-
-                if (data.url) {
-                  window.location.href = data.url;
-                } else {
-                  alert("Erro ao criar sessão de pagamento.");
-                }
-              } catch (err) {
-                console.error(err);
-                alert("Erro ao iniciar pagamento.");
-              } finally {
-                setLoadingIndex(null);
-              }
-            }}
-            disabled={loadingIndex === i}
-            className={`w-full py-6 rounded-2xl font-bold text-xl transition-all duration-300 text-center block ${
-              plan.highlighted
-                ? "bg-gradient-to-r from-green-400 to-green-600 text-white shadow-lg hover:shadow-2xl hover:scale-105"
-                : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
-            } ${loadingIndex === i ? "opacity-70 cursor-wait" : ""}`}
-          >
-            {loadingIndex === i ? "Aguarde..." : plan.cta}
-          </button>
-
-                </div>
-              ))}
+              <button
+                onClick={() => handleCheckout(i)}
+                disabled={loadingIndex === i}
+                className={`w-full py-6 rounded-2xl font-bold text-xl transition-all duration-300 text-center block ${
+                  plan.highlighted
+                    ? "bg-gradient-to-r from-green-400 to-green-600 text-white shadow-lg hover:shadow-2xl hover:scale-105"
+                    : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
+                } ${loadingIndex === i ? "opacity-70 cursor-wait" : ""}`}
+              >
+                {loadingIndex === i ? "Aguarde..." : plan.cta}
+              </button>
             </div>
+          ))}
+        </div>
       </section>
 
       {/* CTA Final */}

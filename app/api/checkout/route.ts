@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
       // ⬇️⬇️ HABILITA CUPOM NO CHECKOUT ⬇️⬇️
       allow_promotion_codes: true,
-
+      billing_address_collection: "required",
       success_url: "https://conectaaii.com.br/sucesso?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://conectaaii.com.br/cancelado",
     });

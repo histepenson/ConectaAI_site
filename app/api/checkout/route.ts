@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-11-17.clover", // versão corrigida
+  apiVersion: "2025-11-17.clover",
 });
 
 export async function POST(req: NextRequest) {
@@ -25,11 +25,14 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
+
+      // ⬇️⬇️ HABILITA CUPOM NO CHECKOUT ⬇️⬇️
+      allow_promotion_codes: true,
+
       success_url: "https://conectaaii.com.br/sucesso?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://conectaaii.com.br/cancelado",
     });
 
-    // Verifica se a URL está disponível
     if (!session.url) {
       return NextResponse.json(
         { error: "Falha ao gerar link de checkout" },
@@ -39,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       url: session.url,
-      sessionId: session.id, // também retorna o ID da sessão
+      sessionId: session.id,
     });
   } catch (error: any) {
     console.error("Stripe error:", error);

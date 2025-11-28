@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       mode: recurring ? "subscription" : "payment",
       payment_method_types: ["card"],
+
       line_items: [
         {
           price: priceId,
@@ -26,27 +27,28 @@ export async function POST(req: NextRequest) {
         },
       ],
 
-      // ⬇️⬇️ HABILITA CUPOM NO CHECKOUT ⬇️⬇️
       allow_promotion_codes: true,
+
       billing_address_collection: "required",
-      success_url: "https://conectaaii.com.br/sucesso?session_id={CHECKOUT_SESSION_ID}",
+      shipping_address_collection: { allowed_countries: ["BR"] },
+
+      // Trial funcionando
+      ...(recurring
+        ? { subscription_data: { trial_period_days: 15 } }
+        : {}),
+
+      success_url:
+        "https://conectaaii.com.br/sucesso?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://conectaaii.com.br/cancelado",
     });
-
-    if (!session.url) {
-      return NextResponse.json(
-        { error: "Falha ao gerar link de checkout" },
-        { status: 500 }
-      );
-    }
 
     return NextResponse.json({
       url: session.url,
       sessionId: session.id,
     });
   } catch (error: any) {
-    console.error("Stripe error:", error);
-    const message = error?.raw?.message || error?.message || "Erro interno no servidor";
+    const message =
+      error?.raw?.message || error?.message || "Erro interno no servidor";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

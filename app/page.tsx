@@ -58,7 +58,7 @@ export default function Home() {
     {
       title: "Cálculo de densidade de sementes",
       image: "/img/exemplo_1.jpeg",
-      desc: "Cálculo de forma didática de como o usuário pode perguntar para o Agente"
+      desc: "Passo a passo didático para ensinar o usuário a perguntar ao Agente"
     },
     {
       title: "Apoio para estudantes de agronomia e áreas afins",

@@ -28,6 +28,10 @@ export async function POST(req: NextRequest) {
       ],
 
       // ❌ Removido: allow_promotion_codes: true
+  // 👇 onde habilita o telefone
+      phone_number_collection: {
+        enabled: true,
+      },
 
       billing_address_collection: "required",
       shipping_address_collection: { allowed_countries: ["BR"] },

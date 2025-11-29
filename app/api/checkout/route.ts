@@ -27,12 +27,11 @@ export async function POST(req: NextRequest) {
         },
       ],
 
-      allow_promotion_codes: true,
+      // ❌ Removido: allow_promotion_codes: true
 
       billing_address_collection: "required",
       shipping_address_collection: { allowed_countries: ["BR"] },
 
-      // Trial funcionando
       ...(recurring
         ? { subscription_data: { trial_period_days: 15 } }
         : {}),

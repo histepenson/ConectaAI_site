@@ -39,6 +39,34 @@ export default function Home() {
     }
   ];
 
+  const examples = [
+    {
+      title: "Caso de Sucesso",
+      image: "/img/case_1.jpeg",
+      desc: "Relatório de Monitoramento"
+    },
+    {
+      title: "Cálculo de dosagem adubo",
+      image: "/img/exemplo_1.jpeg",
+      desc: "Cálculos confiáveis"
+    },
+    {
+      title: "Caso de Sucesso",
+      image: "/img/case_2.jpeg",
+      desc: "Usuário feliz com ferramenta de emitir relatorio através de áudio"
+    },
+    {
+      title: "Cálculo de densidade de sementes",
+      image: "/img/exemplo_1.jpeg",
+      desc: "Cálculo de forma didática de como o usuário pode perguntar para o Agente"
+    },
+    {
+      title: "Apoio para estudantes de agronomia e áreas afins",
+      image: "/img/exemplo_4.jpeg",
+      desc: "Direcionamento, artigos, estruturação de TCC e artigos"
+    }
+  ];
+
   // Função para rastrear conversão no Google Ads
   const trackCheckoutEvent = (planName: string, value: number) => {
     if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -246,6 +274,128 @@ export default function Home() {
                 </div>
               </div>
             ))}
+        </div>
+      </section>
+
+      {/* EXEMPLOS DE CONVERSA */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-green-300 to-green-500 bg-clip-text text-transparent">
+              Conversas Reais
+            </span>
+          </h2>
+          <p className="text-slate-400 text-lg">Veja exemplos de interações com nosso agente agronômico</p>
+        </div>
+
+        <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory">
+          {examples.map((example, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 w-80 group rounded-2xl overflow-hidden bg-gradient-to-br from-green-900/20 to-slate-900/40 border border-green-500/20 hover:border-green-400/50 backdrop-blur-xl transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/20 hover:-translate-y-2 snap-center flex flex-col"
+            >
+              <div className="relative w-full h-96 bg-slate-800/50 overflow-hidden flex items-center justify-center flex-shrink-0">
+                <img
+                  src={example.image}
+                  alt={example.title}
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <div className="p-5 flex-grow flex flex-col justify-end">
+                <h3 className="text-lg font-bold text-white">{example.title}</h3>
+                <p className="text-slate-400 text-sm mt-2">{example.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* TESTE GRÁTIS */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <div className="relative p-12 rounded-3xl overflow-hidden bg-gradient-to-r from-emerald-600/30 via-green-600/20 to-teal-600/30 border-2 border-green-400/60 backdrop-blur-xl">
+          {/* Animação de fundo */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-0 left-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-block px-4 py-2 rounded-full bg-green-500/20 border border-green-400/50 mb-6">
+                <p className="text-sm font-bold text-green-300">⏱️ OFERTA LIMITADA</p>
+              </div>
+              <h2 className="text-5xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-green-200 to-emerald-300 bg-clip-text text-transparent">
+                  Teste Grátis
+                </span>
+                <br />
+                <span className="text-white">por 15 dias</span>
+              </h2>
+              <p className="text-xl text-slate-200 mb-8 leading-relaxed">
+                Teste todas as funcionalidades do seu agrônomo de IA sem pagar nada. Sem cartão de crédito necessário.
+              </p>
+              
+              <ul className="space-y-4 mb-10">
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                  <span className="text-slate-200 text-lg">Acesso completo a todas as funções</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                  <span className="text-slate-200 text-lg">Consultoria 24/7 no WhatsApp</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                  <span className="text-slate-200 text-lg">Sem compromisso - cancele quando quiser</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                  <span className="text-slate-200 text-lg">Nenhum dado de cartão solicitado</span>
+                </li>
+              </ul>
+
+              <button 
+                onClick={() => handleCheckout(0)}
+                disabled={loadingIndex === 0}
+                className="px-10 py-5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-2xl font-bold text-xl text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 w-full md:w-auto"
+              >
+                {loadingIndex === 0 ? "Aguarde..." : "Começar Teste Grátis →"}
+              </button>
+            </div>
+
+            <div className="hidden md:block">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl blur-2xl"></div>
+                <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 border border-green-500/30">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Período de teste:</span>
+                      <span className="font-bold text-green-300 text-lg">15 dias</span>
+                    </div>
+                    <div className="h-px bg-gradient-to-r from-green-500/20 to-transparent"></div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Custo:</span>
+                      <span className="font-bold text-green-300 text-lg">GRÁTIS</span>
+                    </div>
+                    <div className="h-px bg-gradient-to-r from-green-500/20 to-transparent"></div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Cartão necessário:</span>
+                      <span className="font-bold text-emerald-400">NÃO</span>
+                    </div>
+                    <div className="h-px bg-gradient-to-r from-green-500/20 to-transparent"></div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Cancelar:</span>
+                      <span className="font-bold text-emerald-400">A qualquer hora</span>
+                    </div>
+                    <div className="h-px bg-gradient-to-r from-green-500/20 to-transparent"></div>
+                    <div className="pt-4 bg-green-500/10 rounded-lg p-4 border border-green-500/20">
+                      <p className="text-sm text-green-300 font-semibold">✓ Após 15 dias, você escolhe se continua</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

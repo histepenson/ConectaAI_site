@@ -2,7 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import { CheckCircle, Zap, MessageCircle, Leaf, TrendingUp, AlertCircle } from "lucide-react";
-
+  declare const fbq: any;
 export default function Home() {
   const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
   const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
@@ -15,6 +15,8 @@ export default function Home() {
     { icon: MessageCircle, title: "Cálculos gerais do campo", desc: "Realizar qualquer cálculo, seja de adubação, sementes, dentro do whatsapp." },
     { icon: Zap, title: "Consultoria 24h", desc: "Especialista agronômico disponível sempre" }
   ];
+
+
 
   const plans = [
     {
@@ -67,27 +69,13 @@ export default function Home() {
     }
   ];
 
-  // Função para rastrear conversão no Google Ads
-  const trackCheckoutEvent = (planName: string, value: number) => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'begin_checkout', {
-        'value': value,
-        'currency': 'BRL',
-        'items': [{
-          'item_name': planName,
-          'price': value
-        }]
-      });
-    }
-  };
+
 
   const handleCheckout = async (planIndex: number) => {
     try {
       setLoadingIndex(planIndex);
       const plan = plans[planIndex];
 
-      // Rastrear evento de checkout no Google Ads
-      trackCheckoutEvent(plan.name, plan.value);
 
       console.log("PLAN:", plan);
       console.log("PRICEID:", plan.priceId);
@@ -353,14 +341,33 @@ export default function Home() {
                   <span className="text-slate-200 text-lg">Nenhum dado de cartão solicitado</span>
                 </li>
               </ul>
+                <button 
+                  onClick={() => {
+                    // Disparo do PIXEL (navegador)
+                    if (typeof window !== "undefined" && typeof fbq !== "undefined") {
+                      fbq("trackCustom", "BotaoComecarTesteGratis");
+                    }
 
-              <button 
-                onClick={() => handleCheckout(0)}
-                disabled={loadingIndex === 0}
-                className="px-10 py-5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-2xl font-bold text-xl text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 w-full md:w-auto"
-              >
-                {loadingIndex === 0 ? "Aguarde..." : "Começar Teste Grátis →"}
-              </button>
+                    // Disparo da Conversion API (backend)
+                    fetch("/api/meta/events", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        event: "BotaoComecarTesteGratis",
+                        url: window.location.href,
+                      }),
+                    });
+
+                    // Continua seu fluxo normalmente
+                    handleCheckout(0);
+                  }}
+                  
+                  disabled={loadingIndex === 0}
+                  className="px-10 py-5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-2xl font-bold text-xl text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 w-full md:w-auto"
+                >
+                  {loadingIndex === 0 ? "Aguarde..." : "Começar Teste Grátis →"}
+                </button>
+
             </div>
 
             <div className="hidden md:block">
@@ -397,7 +404,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section>  
 
       {/* PREÇO */}
       <section id="preco" className="max-w-7xl mx-auto px-6 py-24">

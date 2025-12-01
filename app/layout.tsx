@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next"; // <-- ADICIONADO
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,9 +21,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-BR">
       <head>
@@ -56,8 +57,10 @@ export default function RootLayout({
 
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
+
+        {/* Vercel Analytics */}
+        <Analytics />   {/* <-- AQUI ESTÁ O CERTO */}
       </body>
     </html>
   );
 }
-  

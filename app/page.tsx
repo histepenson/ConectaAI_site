@@ -1,8 +1,9 @@
-// app/page.tsx
 "use client";
 import React, { useState } from "react";
 import { CheckCircle, Zap, MessageCircle, Leaf, TrendingUp, AlertCircle } from "lucide-react";
-  declare const fbq: any;
+
+declare const fbq: any;
+
 export default function Home() {
   const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
   const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
@@ -16,28 +17,26 @@ export default function Home() {
     { icon: Zap, title: "Consultoria 24h", desc: "Especialista agronômico disponível sempre" }
   ];
 
-
-
   const plans = [
     {
       name: "Plano Recorrente",
-      price: "R$ 39,99",
+      price: "R$ 59,99",
       description: "Acesso contínuo com suporte prioritário",
-      priceId: "price_1SYc7dERrGAbzA6MnUyafWgp",
+      priceId: "price_1SZKlgERrGAbzA6MuzsnzL3o",
       highlighted: true,
       cta: "Assinar Agora",
       recorrente: true,
-      value: 39.99,
+      value: 59.99,
     },
     {
       name: "Sem recorrência - Plano 30 dias",
-      price: "R$ 49,99",
+      price: "R$ 89,99",
       description: "Ativação pontual do seu agente",
-      priceId: "price_1SYcDQERrGAbzA6MNvmKyssY",
+      priceId: "price_1SZKkyERrGAbzA6M9YT4y1XI",
       highlighted: false,
       cta: "Comprar Agora",
       recorrente: false,
-      value: 179.99,
+      value: 89.99,
     }
   ];
 
@@ -69,13 +68,10 @@ export default function Home() {
     }
   ];
 
-
-
   const handleCheckout = async (planIndex: number) => {
     try {
       setLoadingIndex(planIndex);
       const plan = plans[planIndex];
-
 
       console.log("PLAN:", plan);
       console.log("PRICEID:", plan.priceId);
@@ -92,7 +88,6 @@ export default function Home() {
       const data = await res.json();
 
       if (data.url) {
-        // Rastrear conversão completa quando o usuário é redirecionado
         if (typeof window !== 'undefined' && (window as any).gtag) {
           (window as any).gtag('event', 'purchase', {
             'value': plan.value,
@@ -119,7 +114,6 @@ export default function Home() {
 
   return (
     <main className="bg-gradient-to-br from-slate-950 via-green-950 to-slate-900 min-h-screen text-white overflow-hidden">
-      {/* Background animated elements */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-green-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-600/5 rounded-full blur-3xl"></div>
@@ -301,7 +295,6 @@ export default function Home() {
       {/* TESTE GRÁTIS */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="relative p-12 rounded-3xl overflow-hidden bg-gradient-to-r from-emerald-600/30 via-green-600/20 to-teal-600/30 border-2 border-green-400/60 backdrop-blur-xl">
-          {/* Animação de fundo */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-0 left-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
@@ -343,12 +336,10 @@ export default function Home() {
               </ul>
                 <button 
                   onClick={() => {
-                    // Disparo do PIXEL (navegador)
                     if (typeof window !== "undefined" && typeof fbq !== "undefined") {
                       fbq("trackCustom", "BotaoComecarTesteGratis");
                     }
 
-                    // Disparo da Conversion API (backend)
                     fetch("/api/meta/events", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
@@ -358,7 +349,6 @@ export default function Home() {
                       }),
                     });
 
-                    // Continua seu fluxo normalmente
                     handleCheckout(0);
                   }}
                   

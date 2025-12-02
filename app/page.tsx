@@ -502,6 +502,18 @@ export default function Home() {
       <footer className="max-w-7xl mx-auto px-6 py-12 border-t border-green-500/10 text-center text-slate-500 text-sm">
         <p>© 2024 Agente de IA Agrônomo. Todos os direitos reservados.</p>
       </footer>
+
+      {/* BOTÃO FLUTUANTE WHATSAPP */}
+      <a
+        href="https://wa.me/62994368426?text=Ol%C3%A1%2C%20ainda%20tenho%20d%C3%BAvidas"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white px-5 py-4 rounded-full shadow-xl flex items-center gap-3 z-50 transition-all duration-300 hover:scale-105"
+      >
+        <MessageCircle className="w-6 h-6 text-white" />
+        <span className="font-semibold">Ainda com dúvidas? Clique aqui  </span>
+      </a>
+
     </main>
   );
 }

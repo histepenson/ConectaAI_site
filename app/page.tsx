@@ -69,9 +69,17 @@ export default function Home() {
   ];
 
   const handleCheckout = async (planIndex: number) => {
+    const plan = plans[planIndex];
+
+    // Se for o plano sem recorrência (30 dias), redireciona para WhatsApp
+    if (!plan.recorrente) {
+      window.location.href = "https://wa.me/62994368426?text=Ol%C3%A1%20ConectaAI,%20quero%20Comprar%20Plano%2030%20dias";
+      return;
+    }
+
+    // Para o plano recorrente, continua com o checkout Stripe
     try {
       setLoadingIndex(planIndex);
-      const plan = plans[planIndex];
 
       console.log("PLAN:", plan);
       console.log("PRICEID:", plan.priceId);

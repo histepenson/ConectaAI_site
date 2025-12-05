@@ -27,7 +27,7 @@ export default function Home() {
       highlighted: true,
       cta: "Começar Teste Grátis 15 Dias",
       recorrente: true,
-      value: 47.00,
+      value: 37.00,
       savings: "Economize R$ 30/mês",
       badge: "MAIS ESCOLHIDO"
     },

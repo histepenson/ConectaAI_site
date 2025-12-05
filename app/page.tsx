@@ -94,18 +94,30 @@ export default function Home() {
     }
   ];
 
+ const gtag_report_conversion = (url?: string) => {
+    const callback = function () {
+      if (typeof(url) != 'undefined') {
+        window.location.href = url;
+      }
+    };
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-17766485655/p4-RCMKQzswbEJed3JdC',
+        'value': 1.0,
+        'currency': 'BRL',
+        'transaction_id': '',
+        'event_callback': callback
+      });
+    }
+    return false;
+  };
+
   const handleCheckout = async (planIndex: number) => {
     const plan = plans[planIndex];
 
-    // Dispara evento do Google Ads ao clicar
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
-        'send_to': 'AW-17766485655',
-        'value': plan.value,
-        'currency': 'BRL',
-        'transaction_id': ''
-      });
-    }
+    // Dispara evento de conversão do Google Ads
+    gtag_report_conversion()
+
 
     if (!plan.recorrente) {
       // Dispara evento do Facebook Pixel para plano não recorrente

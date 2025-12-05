@@ -20,15 +20,15 @@ export default function Home() {
   const plans = [
     {
       name: "Plano Recorrente",
-      price: "R$ 37,00",
+      price: "R$ 47,00",
       priceDetail: "/mês",
       description: "Melhor custo-benefício com suporte prioritário",
       priceId: "price_1Sb3nIERrGAbzA6M2hHmaCV5",
       highlighted: true,
       cta: "Começar Teste Grátis 15 Dias",
       recorrente: true,
-      value: 37,
-      savings: "Economize R$ 20/mês",
+      value: 47.00,
+      savings: "Economize R$ 30/mês",
       badge: "MAIS ESCOLHIDO"
     },
     {
@@ -40,7 +40,7 @@ export default function Home() {
       highlighted: false,
       cta: "Ativar Agora",
       recorrente: false,
-      value: 1,
+      value: 1.00,
       badge: "SEM RECORRÊNCIA"
     }
   ];
@@ -97,13 +97,43 @@ export default function Home() {
   const handleCheckout = async (planIndex: number) => {
     const plan = plans[planIndex];
 
-   /* if (!plan.recorrente) {
+    // Dispara evento do Google Ads ao clicar
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-17766485655',
+        'value': plan.value,
+        'currency': 'BRL',
+        'transaction_id': ''
+      });
+    }
+
+    if (!plan.recorrente) {
+      // Dispara evento do Facebook Pixel para plano não recorrente
+      if (typeof window !== "undefined" && typeof fbq !== "undefined") {
+        fbq("track", "InitiateCheckout", {
+          value: plan.value,
+          currency: "BRL",
+          content_name: plan.name,
+          content_category: "Plano 30 dias"
+        });
+      }
+
       window.location.href = "https://wa.me/62994368426?text=Ol%C3%A1%20ConectaAI,%20quero%20Comprar%20Plano%2030%20dias";
       return;
-    }*/
+    }
 
     try {
       setLoadingIndex(planIndex);
+
+      // Dispara evento do Facebook Pixel para plano recorrente
+      if (typeof window !== "undefined" && typeof fbq !== "undefined") {
+        fbq("track", "InitiateCheckout", {
+          value: plan.value,
+          currency: "BRL",
+          content_name: plan.name,
+          content_category: "Plano Recorrente"
+        });
+      }
 
       const res = await fetch("/api/checkout", {
         method: "POST",

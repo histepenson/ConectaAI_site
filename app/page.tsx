@@ -20,20 +20,20 @@ export default function Home() {
   const plans = [
     {
       name: "Plano Recorrente",
-      price: "R$ 1,00",
+      price: "R$ 37,00",
       priceDetail: "/mês",
       description: "Melhor custo-benefício com suporte prioritário",
-      priceId: "price_1Sb3hWERrGAbzA6McTw8WS0Z",
+      priceId: "price_1Sb3nIERrGAbzA6M2hHmaCV5",
       highlighted: true,
       cta: "Começar Teste Grátis 15 Dias",
-      recorrente: false,
-      value: 1,
-      savings: "Economize R$ 30/mês",
+      recorrente: true,
+      value: 37,
+      savings: "Economize R$ 20/mês",
       badge: "MAIS ESCOLHIDO"
     },
     {
       name: "Plano 30 Dias",
-      price: "R$ 47,00",
+      price: "R$ 1,00",
       priceDetail: "/pagamento único",
       description: "Sem compromisso, cancele quando quiser",
       priceId: "price_1Sb3hWERrGAbzA6McTw8WS0Z",
@@ -97,10 +97,10 @@ export default function Home() {
   const handleCheckout = async (planIndex: number) => {
     const plan = plans[planIndex];
 
-    if (!plan.recorrente) {
+   /* if (!plan.recorrente) {
       window.location.href = "https://wa.me/62994368426?text=Ol%C3%A1%20ConectaAI,%20quero%20Comprar%20Plano%2030%20dias";
       return;
-    }
+    }*/
 
     try {
       setLoadingIndex(planIndex);

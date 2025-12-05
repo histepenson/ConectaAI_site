@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/next"; // <-- ADICIONADO
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,6 +27,23 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+
+        {/* Google ADS (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17766485655"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17766485655');
+          `}
+        </Script>
+        {/* Fim Google ADS */}
+
         {/* Meta Pixel Code */}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
@@ -53,13 +70,14 @@ export default function RootLayout({
           />
         </noscript>
         {/* End Meta Pixel Code */}
+
       </head>
 
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
 
         {/* Vercel Analytics */}
-        <Analytics />   {/* <-- AQUI ESTÁ O CERTO */}
+        <Analytics />
       </body>
     </html>
   );

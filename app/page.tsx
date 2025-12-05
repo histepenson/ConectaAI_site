@@ -28,19 +28,19 @@ export default function Home() {
       cta: "Começar Teste Grátis 15 Dias",
       recorrente: true,
       value: 37.00,
-      savings: "Economize R$ 30/mês",
+      savings: "Economize R$ 10/mês",
       badge: "MAIS ESCOLHIDO"
     },
     {
       name: "Plano 30 Dias",
-      price: "R$ 1,00",
+      price: "R$ 47,00",
       priceDetail: "/pagamento único",
       description: "Sem compromisso, cancele quando quiser",
-      priceId: "price_1Sb3hWERrGAbzA6McTw8WS0Z",
+      priceId: "price_1Sb5RcERrGAbzA6MZoqEwq6R",
       highlighted: false,
       cta: "Ativar Agora",
       recorrente: false,
-      value: 1.00,
+      value: 47.00,
       badge: "SEM RECORRÊNCIA"
     }
   ];

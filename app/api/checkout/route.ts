@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
       success_url:
         "https://conectaaii.com.br/sucesso?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "https://conectaaii.com.br/cancelado",
+      cancel_url: "https://conectaaii.com.br/ ",
     });
 
     return NextResponse.json({

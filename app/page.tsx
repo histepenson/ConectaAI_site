@@ -20,7 +20,7 @@ export default function Home() {
   const plans = [
     {
       name: "Plano Recorrente",
-      price: "R$ 47,00",
+      price: "R$ 37,00",
       priceDetail: "/mês",
       description: "Melhor custo-benefício com suporte prioritário",
       priceId: "price_1Sb3nIERrGAbzA6M2hHmaCV5",

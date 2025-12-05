@@ -100,17 +100,21 @@ export default function Home() {
         window.location.href = url;
       }
     };
+const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11);
+
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'conversion', {
         'send_to': 'AW-17766485655/p4-RCMKQzswbEJed3JdC',
         'value': 1.0,
         'currency': 'BRL',
-        'transaction_id': '',
+        'transaction_id': transactionId,
         'event_callback': callback
       });
     }
     return false;
   };
+
+  
 
   const handleCheckout = async (planIndex: number) => {
     const plan = plans[planIndex];
@@ -546,7 +550,7 @@ export default function Home() {
           {[
             {
               q: "Como funciona o período de teste grátis?",
-              a: "Você tem 15 dias para testar todas as funcionalidades sem pagar nada. Não pedimos cartão de crédito no cadastro."
+              a: "Você tem 15 dias para testar todas as funcionalidades sem pagar nada. Não cobramos até que seja expirado o período teste."
             },
             {
               q: "Posso cancelar a qualquer momento?",

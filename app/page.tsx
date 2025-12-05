@@ -26,7 +26,7 @@ export default function Home() {
       priceId: "price_1Sb3hWERrGAbzA6McTw8WS0Z",
       highlighted: true,
       cta: "Começar Teste Grátis 15 Dias",
-      recorrente: true,
+      recorrente: false,
       value: 1,
       savings: "Economize R$ 30/mês",
       badge: "MAIS ESCOLHIDO"

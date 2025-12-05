@@ -20,27 +20,27 @@ export default function Home() {
   const plans = [
     {
       name: "Plano Recorrente",
-      price: "R$ 59,99",
+      price: "R$ 37,00",
       priceDetail: "/mês",
       description: "Melhor custo-benefício com suporte prioritário",
-      priceId: "price_1SZKlgERrGAbzA6MuzsnzL3o",
+      priceId: "price_1Sb3nIERrGAbzA6M2hHmaCV5",
       highlighted: true,
       cta: "Começar Teste Grátis 15 Dias",
       recorrente: true,
-      value: 59.99,
+      value: 37,
       savings: "Economize R$ 30/mês",
       badge: "MAIS ESCOLHIDO"
     },
     {
       name: "Plano 30 Dias",
-      price: "R$ 89,99",
+      price: "R$ 47,00",
       priceDetail: "/pagamento único",
       description: "Sem compromisso, cancele quando quiser",
-      priceId: "price_1SZKkyERrGAbzA6M9YT4y1XI",
+      priceId: "price_1Sb3hWERrGAbzA6McTw8WS0Z",
       highlighted: false,
       cta: "Ativar Agora",
       recorrente: false,
-      value: 89.99,
+      value: 1,
       badge: "SEM RECORRÊNCIA"
     }
   ];

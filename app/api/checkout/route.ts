@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 console.log("🔧 DEBUG: STRIPE_SECRET_KEY existe?", !!process.env.STRIPE_SECRET_KEY);
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-11-20.acacia", // versão atual e válida
+  apiVersion: "2025-11-17.clover", // versão atual e válida
 });
 
 export async function POST(req: NextRequest) {

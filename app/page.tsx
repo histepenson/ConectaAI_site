@@ -94,13 +94,9 @@ export default function Home() {
     }
   ];
 
+  
  const gtag_report_conversion = (url?: string) => {
-    const callback = function () {
-      if (typeof(url) != 'undefined') {
-        window.location.href = url;
-      }
-    };
-const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11);
+    const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11);
 
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'conversion', {
@@ -108,7 +104,11 @@ const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).sub
         'value': 1.0,
         'currency': 'BRL',
         'transaction_id': transactionId,
-        'event_callback': callback
+        'event_callback': function() {
+          if (typeof(url) != 'undefined') {
+            window.location.href = url;
+          }
+        }
       });
     }
     return false;

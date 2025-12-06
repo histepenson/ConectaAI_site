@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 export async function POST(req: NextRequest) {
-  console.log("📩 Recebendo requisição /api/checkout...");
+  console.log("📩 Recebendo rquisição /api/checkout...");
 
   try {
     const body = await req.json();

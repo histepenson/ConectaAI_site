@@ -94,7 +94,7 @@ export default function Home() {
     }
   ];
 
-  
+
  const gtag_report_conversion = (url?: string) => {
     const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11);
 
@@ -113,7 +113,6 @@ export default function Home() {
     }
     return false;
   };
-
   
 
   const handleCheckout = async (planIndex: number) => {

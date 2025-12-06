@@ -123,7 +123,7 @@ const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).sub
     gtag_report_conversion()
 
 
-    /*if (!plan.recorrente) {
+    if (!plan.recorrente) {
       // Dispara evento do Facebook Pixel para plano não recorrente
       if (typeof window !== "undefined" && typeof fbq !== "undefined") {
         fbq("track", "InitiateCheckout", {
@@ -136,7 +136,7 @@ const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).sub
 
       window.location.href = "https://wa.me/62994368426?text=Ol%C3%A1%20ConectaAI,%20quero%20Comprar%20Plano%2030%20dias";
       return;
-    }*/
+    }
 
     try {
       setLoadingIndex(planIndex);

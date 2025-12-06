@@ -27,7 +27,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-
         {/* Google ADS (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17766485655"
@@ -40,6 +39,9 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-17766485655');
+            
+            // Configura o callback padrão para conversões
+            gtag('set', 'allow_ad_personalization_signals', true);
           `}
         </Script>
         {/* Fim Google ADS */}
@@ -70,7 +72,6 @@ export default function RootLayout({
           />
         </noscript>
         {/* End Meta Pixel Code */}
-
       </head>
 
       <body className={`${geistSans.variable} ${geistMono.variable}`}>

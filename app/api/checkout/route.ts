@@ -1,20 +1,33 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 
+console.log("🔧 DEBUG: STRIPE_SECRET_KEY existe?", !!process.env.STRIPE_SECRET_KEY);
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-11-17.clover",
+  apiVersion: "2024-11-20.acacia", // versão atual e válida
 });
 
 export async function POST(req: NextRequest) {
+  console.log("📩 Recebendo requisição /api/checkout...");
+
   try {
-    const { priceId, recurring } = await req.json();
+    const body = await req.json();
+    console.log("📦 Body recebido:", body);
+
+    const { priceId, recurring } = body;
 
     if (!priceId) {
+      console.error("❌ priceId não enviado");
       return NextResponse.json(
         { error: "priceId não enviado" },
         { status: 400 }
       );
     }
+
+    console.log("💵 priceId:", priceId);
+    console.log("🔄 recurring:", recurring);
+
+    console.log("⚙ Criando sessão no Stripe...");
 
     const session = await stripe.checkout.sessions.create({
       mode: recurring ? "subscription" : "payment",
@@ -27,8 +40,6 @@ export async function POST(req: NextRequest) {
         },
       ],
 
-      // ❌ Removido: allow_promotion_codes: true
-  // 👇 onde habilita o telefone
       phone_number_collection: {
         enabled: true,
       },
@@ -42,16 +53,25 @@ export async function POST(req: NextRequest) {
 
       success_url:
         "https://conectaaii.com.br/sucesso?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "https://conectaaii.com.br/ ",
+      cancel_url: "https://conectaaii.com.br/",
     });
+
+    console.log("✅ Sessão criada com sucesso:", session.id);
 
     return NextResponse.json({
       url: session.url,
       sessionId: session.id,
     });
+
   } catch (error: any) {
+    console.error("❌ ERRO COMPLETO DO STRIPE:");
+    console.error(error);
+
     const message =
-      error?.raw?.message || error?.message || "Erro interno no servidor";
+      error?.raw?.message ||
+      error?.message ||
+      "Erro interno no servidor";
+
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

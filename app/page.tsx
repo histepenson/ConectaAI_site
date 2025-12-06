@@ -94,33 +94,18 @@ export default function Home() {
     }
   ];
 
-
- const gtag_report_conversion = (url?: string) => {
-    const transactionId = 'TXN-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11);
-
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
-        'send_to': 'AW-17766485655/p4-RCMKQzswbEJed3JdC',
-        'value': 1.0,
-        'currency': 'BRL',
-        'transaction_id': transactionId,
-        'event_callback': function() {
-          if (typeof(url) != 'undefined') {
-            window.location.href = url;
-          }
-        }
-      });
-    }
-    return false;
-  };
-  
-
   const handleCheckout = async (planIndex: number) => {
     const plan = plans[planIndex];
 
-    // Dispara evento de conversão do Google Ads
-    gtag_report_conversion()
-
+    // Dispara evento do Google Ads ao clicar
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-17766485655',
+        'value': plan.value,
+        'currency': 'BRL',
+        'transaction_id': ''
+      });
+    }
 
     if (!plan.recorrente) {
       // Dispara evento do Facebook Pixel para plano não recorrente
@@ -549,7 +534,7 @@ export default function Home() {
           {[
             {
               q: "Como funciona o período de teste grátis?",
-              a: "Você tem 15 dias para testar todas as funcionalidades sem pagar nada. Não cobramos até que seja expirado o período teste."
+              a: "Você tem 15 dias para testar todas as funcionalidades sem pagar nada. Não pedimos cartão de crédito no cadastro."
             },
             {
               q: "Posso cancelar a qualquer momento?",

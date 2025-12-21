@@ -25,7 +25,7 @@ export default function Home() {
       description: "Melhor custo-benefício com suporte prioritário",
       priceId: "price_1Sb3nIERrGAbzA6M2hHmaCV5",
       highlighted: true,
-      cta: "Começar Teste Grátis 15 Dias",
+      cta: "Começar Teste Grátis 7 dias",
       recorrente: true,
       value: 37.00,
       savings: "Economize R$ 10/mês",
@@ -118,7 +118,7 @@ export default function Home() {
         });
       }
 
-      window.location.href = "https://wa.me/62994368426?text=Ol%C3%A1%20ConectaAI,%20quero%20Comprar%20Plano%2030%20dias";
+      window.location.href = "https://pay.kiwify.com.br/Nn0PaxK";
       return;
     }
 
@@ -135,34 +135,10 @@ export default function Home() {
         });
       }
 
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          priceId: plan.priceId, 
-          recurring: plan.recorrente 
-        }),
-      });
+      window.location.href = plan.recorrente
+      ? "https://pay.kiwify.com.br/CnkJsxq"
+      : "https://pay.kiwify.com.br/Nn0PaxK";
 
-      const data = await res.json();
-
-      if (data.url) {
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-          (window as any).gtag('event', 'purchase', {
-            'value': plan.value,
-            'currency': 'BRL',
-            'transaction_id': 'CHK' + Date.now(),
-            'items': [{
-              'item_name': plan.name,
-              'price': plan.value
-            }]
-          });
-        }
-
-        window.location.href = data.url;
-      } else {
-        alert("Erro ao criar sessão de pagamento.");
-      }
     } catch (err) {
       console.error(err);
       alert("Erro ao iniciar pagamento.");
@@ -181,7 +157,7 @@ export default function Home() {
       {/* BARRA DE URGÊNCIA */}
       <div className="bg-gradient-to-r from-green-600 to-emerald-600 py-3 text-center sticky top-0 z-50 shadow-lg">
         <p className="text-white font-bold text-sm md:text-base">
-          ⚡ OFERTA ESPECIAL: 15 dias grátis + Desconto de 33% no plano mensal | Últimas vagas!
+          ⚡ OFERTA ESPECIAL: 7 dias grátis + Desconto de 33% no plano mensal | Últimas vagas!
         </p>
       </div>
 
@@ -234,7 +210,7 @@ export default function Home() {
               }}
               className="group px-8 py-5 bg-gradient-to-r from-green-400 to-green-600 rounded-xl font-bold text-lg text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              Testar Grátis por 15 Dias
+              Testar Grátis por 7 dias
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <a
@@ -380,7 +356,7 @@ export default function Home() {
               Escolha Seu Plano
             </span>
           </h2>
-          <p className="text-slate-400 text-lg">Comece grátis por 15 dias. Sem cartão de crédito necessário.</p>
+          <p className="text-slate-400 text-lg">Comece grátis por 7 dias. Sem cartão de crédito necessário.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -421,7 +397,7 @@ export default function Home() {
               {plan.highlighted && (
                 <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl">
                   <p className="text-green-300 font-bold text-center">
-                    🎁 15 DIAS GRÁTIS para testar
+                    🎁 7 dias GRÁTIS para testar
                   </p>
                 </div>
               )}
@@ -482,7 +458,7 @@ export default function Home() {
           <Shield className="w-12 h-12 text-green-400 mx-auto mb-4" />
           <h3 className="text-2xl font-bold mb-2">Garantia de 100% Satisfação</h3>
           <p className="text-slate-300">
-            Teste por 15 dias sem risco. Se não gostar, cancele a qualquer momento sem custos.
+            Teste por 7 dias sem risco. Se não gostar, cancele a qualquer momento sem custos.
           </p>
         </div>
       </section>
@@ -534,7 +510,7 @@ export default function Home() {
           {[
             {
               q: "Como funciona o período de teste grátis?",
-              a: "Você tem 15 dias para testar todas as funcionalidades sem pagar nada. Não pedimos cartão de crédito no cadastro."
+              a: "Você tem 7 dias para testar todas as funcionalidades sem pagar nada. Não pedimos cartão de crédito no cadastro."
             },
             {
               q: "Posso cancelar a qualquer momento?",
@@ -572,7 +548,7 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Comece Hoje Mesmo.<br />
             <span className="bg-gradient-to-r from-green-200 to-emerald-300 bg-clip-text text-transparent">
-              Teste Grátis por 15 Dias
+              Teste Grátis por 7 dias
             </span>
           </h2>
 

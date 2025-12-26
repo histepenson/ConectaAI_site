@@ -20,14 +20,14 @@ export default function Home() {
   const plans = [
     {
       name: "Plano Recorrente",
-      price: "R$ 37,00",
+      price: "R$ 19,90",
       priceDetail: "/mês",
       description: "Melhor custo-benefício com suporte prioritário",
       priceId: "price_1Sb3nIERrGAbzA6M2hHmaCV5",
       highlighted: true,
       cta: "Começar Teste Grátis 7 dias",
       recorrente: true,
-      value: 37.00,
+      value: 19.90,
       savings: "Economize R$ 10/mês",
       badge: "MAIS ESCOLHIDO"
     },
@@ -40,7 +40,7 @@ export default function Home() {
       highlighted: false,
       cta: "Ativar Agora",
       recorrente: false,
-      value: 47.00,
+      value: 29.00,
       badge: "SEM RECORRÊNCIA"
     }
   ];

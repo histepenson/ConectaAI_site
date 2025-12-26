@@ -136,7 +136,7 @@ export default function Home() {
       }
 
       window.location.href = plan.recorrente
-      ? "https://pay.kiwify.com.br/CnkJsxq"
+      ? "https://pay.kiwify.com.br/V07z9c3"
       : "https://pay.kiwify.com.br/Nn0PaxK";
 
     } catch (err) {

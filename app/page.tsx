@@ -33,7 +33,7 @@ export default function Home() {
     },
     {
       name: "Plano 30 Dias",
-      price: "R$ 47,00",
+      price: "R$ 29,00",
       priceDetail: "/pagamento único",
       description: "Sem compromisso, cancele quando quiser",
       priceId: "price_1Sb5RcERrGAbzA6MZoqEwq6R",
